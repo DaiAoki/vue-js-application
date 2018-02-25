@@ -1,0 +1,21 @@
+-# Caution: haml記法でうまく動かせなかった
+
+-# component template
+%script{ type: "text/x-template", id: "grid-template" }
+  %table
+    %thead
+      %tr
+        %th{ 'v-for' => "key in columns", '@click' => "sortBy(key)", ":class" => "{ active: sortKey : :  key }" }
+          {{ key | capitalize }}
+          %span.arrow{ ":class" => "{ sortOrders[key] > 0 ? 'asc' : 'dsc' }" }
+    %tbody
+      %tr{ 'v-for' => "entry in filteredData" }
+        %td{ 'v-for' => "key in columns" }
+          {{entry[key]}}
+
+-# demo root element
+#demo
+  %form{ id: "search" }
+    Search
+    %input{ name: "query", 'v-model' => "searchQuery" }
+  %demo-grid{ 'data' => "gridData", 'columns' => "gridColumns", 'filter-key' => "searchQuery" }
